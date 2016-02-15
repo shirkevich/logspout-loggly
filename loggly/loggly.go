@@ -108,7 +108,10 @@ func (l *Adapter) SendMessage(msg logglyMessage) {
 
 func (l *Adapter) sendRequestToLoggly(req *http.Request) {
 	resp, err := l.client.Do(req)
-	// defer resp.Body.Close()
+
+	if resp != nil && resp.Body != nil {
+	   defer resp.Body.Close()
+	}
 
 	if err != nil {
 		l.log.Println(
