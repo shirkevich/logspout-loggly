@@ -3,6 +3,7 @@ package loggly
 import (
 	"bytes"
 	"io"
+	"io/ioutil"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -109,7 +110,7 @@ func (l *Adapter) SendMessage(msg logglyMessage) {
 
 func (l *Adapter) sendRequestToLoggly(req *http.Request) {
 	resp, err := l.client.Do(req)
-	io.Copy(ioutil.Discard, res.Body)
+	io.Copy(ioutil.Discard, resp.Body)
 	if resp != nil && resp.Body != nil {
 	   defer resp.Body.Close()
 	}
