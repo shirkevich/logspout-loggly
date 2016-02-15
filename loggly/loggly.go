@@ -122,12 +122,18 @@ func (l *Adapter) sendRequestToLoggly(req *http.Request) {
 		)
 	}
 
-	if resp.StatusCode != http.StatusOK {
+	if resp != nil && resp.StatusCode != http.StatusOK {
 		l.log.Println(
 			fmt.Errorf(
 				"received a non 200 status code when sending message to loggly: %s",
 				err.Error(),
 			),
+		)
+	}
+
+	if resp == nil {
+		l.log.Println(
+			"received an empty response when sending message to loggly"
 		)
 	}
 }
