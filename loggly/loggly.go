@@ -110,9 +110,9 @@ func (l *Adapter) SendMessage(msg logglyMessage) {
 
 func (l *Adapter) sendRequestToLoggly(req *http.Request) {
 	resp, err := l.client.Do(req)
-	io.Copy(ioutil.Discard, resp.Body)
 	if resp != nil && resp.Body != nil {
-	   defer resp.Body.Close()
+		io.Copy(ioutil.Discard, resp.Body)
+		defer resp.Body.Close()
 	}
 
 	if err != nil {
