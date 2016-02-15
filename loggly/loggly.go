@@ -49,7 +49,7 @@ func NewLogglyAdapter(route *router.Route) (router.LogAdapter, error) {
 	return &Adapter{
 		token: token,
 		client: http.Client{
-			Timeout: 900 * time.Millisecond, // logspout will cull any spout that does  respond within 1 second
+			Timeout: 9000 * time.Millisecond, // logspout will cull any spout that does  respond within 1 second
 		},
 		tags: os.Getenv(logglyTagsEnvVar),
 		log:  log.New(os.Stdout, "logspout-loggly", log.LstdFlags),
