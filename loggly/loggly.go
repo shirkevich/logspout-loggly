@@ -2,6 +2,7 @@ package loggly
 
 import (
 	"bytes"
+	"io"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -49,7 +50,7 @@ func NewLogglyAdapter(route *router.Route) (router.LogAdapter, error) {
 	return &Adapter{
 		token: token,
 		client: http.Client{
-			Timeout: 9000 * time.Millisecond, // logspout will cull any spout that does  respond within 1 second
+			Timeout: 900 * time.Millisecond, // logspout will cull any spout that does  respond within 1 second
 		},
 		tags: os.Getenv(logglyTagsEnvVar),
 		log:  log.New(os.Stdout, "logspout-loggly", log.LstdFlags),
@@ -108,7 +109,7 @@ func (l *Adapter) SendMessage(msg logglyMessage) {
 
 func (l *Adapter) sendRequestToLoggly(req *http.Request) {
 	resp, err := l.client.Do(req)
-
+	io.Copy(ioutil.Discard, res.Body)
 	if resp != nil && resp.Body != nil {
 	   defer resp.Body.Close()
 	}
