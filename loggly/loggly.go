@@ -133,7 +133,7 @@ func (l *Adapter) sendRequestToLoggly(req *http.Request) {
 
 	if resp == nil {
 		l.log.Println(
-			"received an empty response when sending message to loggly"
+			"received an empty response when sending message to loggly",
 		)
 	}
 }
